@@ -1,1 +1,1 @@
-# Barber-point
+# Barberpoint
