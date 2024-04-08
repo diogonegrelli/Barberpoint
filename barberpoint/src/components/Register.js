@@ -9,7 +9,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -18,19 +18,27 @@ function Register() {
       return;
     }
 
-    const user = { name, email, birthDate, password };
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const userExists = users.some(user => user.email === email);
+    // Prepara o objeto do usuário para ser enviado
+    const user = { nome: name, email, senha: password, sobrenome: "xxxx", telefone: "xxxxxx" };
 
-    if (userExists) {
-      setError("Usuário com este e-mail já cadastrado.");
-      return;
+
+    try {
+      const response = await fetch('/clientes', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (!response.ok) throw new Error('Falha ao cadastrar usuário');
+
+      alert("Cadastrado com sucesso!");
+      navigate('/');
+    } catch (error) {
+      setError("Erro ao cadastrar usuário. Tente novamente.");
+      console.error("Erro ao fazer o cadastro:", error);
     }
-
-    users.push(user);
-    localStorage.setItem('users', JSON.stringify(users));
-    alert("Cadastrado com sucesso!");
-    navigate('/');
   };
 
   return (

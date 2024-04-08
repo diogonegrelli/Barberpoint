@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.739eea8c.css",
+    "main.js": "/static/js/main.3db6e9e3.js",
+    "static/js/453.163d1d7d.chunk.js": "/static/js/453.163d1d7d.chunk.js",
+    "static/media/barbershop.jpg": "/static/media/barbershop.e5d7f6c96c7435c9c513.jpg",
+    "index.html": "/index.html",
+    "main.739eea8c.css.map": "/static/css/main.739eea8c.css.map",
+    "main.3db6e9e3.js.map": "/static/js/main.3db6e9e3.js.map",
+    "453.163d1d7d.chunk.js.map": "/static/js/453.163d1d7d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.739eea8c.css",
+    "static/js/main.3db6e9e3.js"
+  ]
+}

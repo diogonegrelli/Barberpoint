@@ -7,7 +7,7 @@ function Home() {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("isLoggedIn"); // Remove o estado de login
     navigate('/login');
   };
 
@@ -28,7 +28,7 @@ function Home() {
         <p>Agende seu horário de forma fácil e rápida!</p>
         <p>O controle dos seus serviços aqui.</p>
         {isLoggedIn && (
-          <div style={{ textAlign: 'center', marginTop: '20px' }}> { }
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
             <Link to="/agendar" className="action-btn">Agende seu horário</Link>
           </div>
         )}

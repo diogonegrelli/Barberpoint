@@ -3,10 +3,12 @@ package com.src.barberpoint.controller;
 import com.src.barberpoint.model.Cliente;
 import com.src.barberpoint.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/clientes")
@@ -28,8 +30,9 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Cliente createCliente(@RequestBody Cliente cliente) {
-        return clienteService.save(cliente);
+    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
+        Cliente novoCliente = clienteService.save(cliente);
+        return new ResponseEntity<>(novoCliente, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -54,4 +57,15 @@ public class ClienteController {
                     return ResponseEntity.ok().build();
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credenciais) {
+        String email = credenciais.get("email");
+        String senha = credenciais.get("senha");
+
+        return clienteService.autenticar(email, senha)
+                .map(cliente -> ResponseEntity.ok().body("Login bem-sucedido!"))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos."));
+    }
+
 }
