@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function GerenciarClientes() {
     const [clientes, setClientes] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchClientes();
@@ -31,9 +32,14 @@ function GerenciarClientes() {
         }
     };
 
+    const handleNavigateHome = () => {
+        navigate('/'); // Função para navegar para a Home
+    };
+
     return (
         <div>
             <h2>Gerenciar Clientes</h2>
+            <button onClick={handleNavigateHome} style={{ marginBottom: '10px' }}>HOME</button>
             <table>
                 <thead>
                     <tr>

@@ -7,6 +7,9 @@ import Register from "./components/Register";
 import Agendamento from "./components/Agendamento"; 
 import GerenciarClientes from "./components/GerenciarClientes";
 import EditarCliente from "./components/EditarCliente";
+import CadastroBarbeiro from "./components/CadastroBarbeiro";
+import GerenciarBarbeiros from "./components/GerenciarBarbeiros";
+import EditarBarbeiro from "./components/EditarBarbeiro";
 import './App.css';
 
 function App() {
@@ -19,6 +22,9 @@ function App() {
         <Route path="/agendar" element={<Agendamento />} /> 
         <Route path="/gerenciar-clientes" element={<GerenciarClientes />} />
         <Route path="/editar-cliente/:idCliente" element={<EditarCliente />} />
+        <Route path="/cadastro-barbeiro" element={<CadastroBarbeiro />} />
+        <Route path="/gerenciar-barbeiros" element={<GerenciarBarbeiros />} />
+        <Route path="/editar-barbeiro/:idBarbeiro" element={<EditarBarbeiro />} />
       </Routes>
     </Router>
   );
