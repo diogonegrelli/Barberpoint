@@ -19,7 +19,7 @@ function Register() {
     }
 
     // Prepara o objeto do usuário para ser enviado
-    const user = { nome: name, email, senha: password, sobrenome: "xxxx", telefone: "xxxxxx" };
+    const user = { nome: name, email, senha: password, sobrenome: "-", telefone: "(xx)99999-9999" };
 
 
     try {
