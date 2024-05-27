@@ -13,7 +13,7 @@ public class Barbeiro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idBarbeiro")
+    @Column(name = "id_barbeiro")
     private Long id;
 
     @Column(name = "nome")
@@ -22,10 +22,22 @@ public class Barbeiro {
     @Column(name = "sobrenome")
     private String sobrenome;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "telefone")
+    private String telefone;
+
     @Column(name = "senha")
     private String senha;
 
-    // Getters e Setters
+    @Column(name = "servico")
+    private String servico;
+
+    @Column(name = "duracao")
+    private int duracao;
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -50,11 +62,43 @@ public class Barbeiro {
         this.sobrenome = sobrenome;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getServico() {
+        return servico;
+    }
+
+    public void setServico(String servico) {
+        this.servico = servico;
+    }
+
+    public int getDuracao() {
+        return duracao;
+    }
+
+    public void setDuracao(int duracao) {
+        this.duracao = duracao;
     }
 }

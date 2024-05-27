@@ -28,28 +28,8 @@ public class BarbeiroController {
     }
 
     @PostMapping
-    public Barbeiro createBarbeiro(@RequestBody Barbeiro barbeiro) {
-        return barbeiroService.save(barbeiro);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Barbeiro> updateBarbeiro(@PathVariable Long id, @RequestBody Barbeiro barbeiroDetails) {
-        return barbeiroService.findById(id)
-                .map(barbeiro -> {
-                    barbeiro.setNome(barbeiroDetails.getNome());
-                    barbeiro.setSobrenome(barbeiroDetails.getSobrenome());
-                    barbeiro.setSenha(barbeiroDetails.getSenha());
-                    Barbeiro updatedBarbeiro = barbeiroService.save(barbeiro);
-                    return ResponseEntity.ok(updatedBarbeiro);
-                }).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBarbeiro(@PathVariable Long id) {
-        return barbeiroService.findById(id)
-                .map(barbeiro -> {
-                    barbeiroService.deleteById(id);
-                    return ResponseEntity.ok().build();
-                }).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Barbeiro> createBarbeiro(@RequestBody Barbeiro barbeiro) {
+        Barbeiro savedBarbeiro = barbeiroService.save(barbeiro);
+        return ResponseEntity.ok(savedBarbeiro);
     }
 }
