@@ -10,6 +10,7 @@ import EditarCliente from "./components/EditarCliente";
 import CadastroBarbeiro from "./components/CadastroBarbeiro";
 import GerenciarBarbeiros from "./components/GerenciarBarbeiros";
 import EditarBarbeiro from "./components/EditarBarbeiro";
+import AgendamentoBarbeiro from './components/AgendamentoBarbeiro';
 import './App.css';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/cadastro-barbeiro" element={<CadastroBarbeiro />} />
         <Route path="/gerenciar-barbeiros" element={<GerenciarBarbeiros />} />
         <Route path="/editar-barbeiro/:idBarbeiro" element={<EditarBarbeiro />} />
+        <Route path="/agendamentos" element={<AgendamentoBarbeiro />} />
       </Routes>
     </Router>
   );

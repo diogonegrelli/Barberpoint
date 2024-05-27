@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/agendamentos")
@@ -37,4 +38,10 @@ public class AgendamentoController {
             return ResponseEntity.status(500).body("Erro ao criar agendamento: " + e.getMessage());
         }
     }
+
+    @GetMapping
+    public List<Agendamento> getAllAgendamentos() {
+        return agendamentoService.findAll();
+    }
+
 }
