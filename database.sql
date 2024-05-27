@@ -1,4 +1,4 @@
-SELECT * FROM barberpoint.barbeiros;DROP DATABASE IF EXISTS barberpoint;
+DROP DATABASE IF EXISTS barberpoint;
 CREATE DATABASE barberpoint;
 USE barberpoint;
 
@@ -22,7 +22,11 @@ CREATE TABLE `barbeiros` (
   `id_barbeiro` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255) NOT NULL,
   `sobrenome` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255),
+  `telefone` VARCHAR(20),
   `senha` VARCHAR(255) NOT NULL,
+  `servico` VARCHAR(255),
+  `duracao` INT,
   PRIMARY KEY (`id_barbeiro`)
 );
 
@@ -45,15 +49,16 @@ CREATE TABLE `servicos` (
 
 -- Criação da tabela `agendamentos`
 CREATE TABLE `agendamentos` (
-  `idAgendamento` INT NOT NULL AUTO_INCREMENT,
+  `id_agendamento` INT NOT NULL AUTO_INCREMENT,
   `id_cliente` INT NOT NULL,
   `id_barbeiro` INT NOT NULL,
-  `dataHora` DATETIME NOT NULL,
-  `idServico` INT NOT NULL,
-  PRIMARY KEY (`idAgendamento`),
+  `servico` VARCHAR(255) NOT NULL,
+  `duracao` INT NOT NULL,
+  `data_hora_inicio` DATETIME NOT NULL,
+  `data_hora_fim` DATETIME NOT NULL,
+  PRIMARY KEY (`id_agendamento`),
   FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id_cliente`),
-  FOREIGN KEY (`id_barbeiro`) REFERENCES `barbeiros`(`id_barbeiro`),
-  FOREIGN KEY (`idServico`) REFERENCES `servicos`(`idServico`)
+  FOREIGN KEY (`id_barbeiro`) REFERENCES `barbeiros`(`id_barbeiro`)
 );
 
 /* Inserções iniciais */
@@ -65,9 +70,9 @@ INSERT INTO `servicos` (`nomeServico`, `descricao`, `preco`) VALUES
 ('Sobrancelha', 'Design de sobrancelha', 15.00);
 
 -- Inserção de alguns barbeiros exemplo
-INSERT INTO `barbeiros` (`nome`, `sobrenome`, `senha`) VALUES
-('João', 'Silva', 'senha123'),
-('Carlos', 'Santos', 'senha456');
+-- INSERT INTO `barbeiros` (`nome`, `sobrenome`, `senha`) VALUES
+-- ('João', 'Silva', 'senha123'),
+-- ('Carlos', 'Santos', 'senha456');
 
 -- Inserção de alguns clientes exemplo
 INSERT INTO `clientes` (`nome`, `sobrenome`, `email`, `telefone`, `senha`) VALUES
