@@ -1,81 +1,181 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { format, getDay, addMinutes, setHours, setMinutes } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
-import './Agendamento.css'; 
 
 function Agendamento() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [bookedSlots, setBookedSlots] = useState(() => {
-    const savedSlots = localStorage.getItem('bookedSlots');
-    return savedSlots ? JSON.parse(savedSlots) : {};
-  });
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [barbeiros, setBarbeiros] = useState([]);
+    const [barbeiroId, setBarbeiroId] = useState('');
+    const [servico, setServico] = useState('');
+    const [duracao, setDuracao] = useState(0);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [horariosDisponiveis, setHorariosDisponiveis] = useState([]);
+    const [horariosOcupados, setHorariosOcupados] = useState([]);
 
-  useEffect(() => {
-    localStorage.setItem('bookedSlots', JSON.stringify(bookedSlots));
-  }, [bookedSlots]);
+    useEffect(() => {
+        async function fetchBarbeiros() {
+            const response = await fetch('/barbeiros');
+            const data = await response.json();
+            setBarbeiros(Array.isArray(data) ? data : []);
+        }
+        fetchBarbeiros();
+    }, []);
 
-  const isWeekday = (date) => {
-    const day = getDay(date);
-    return day !== 0; // 0 é Domingo
-  };
+    useEffect(() => {
+        if (barbeiroId && selectedDate && duracao) {
+            async function fetchHorariosOcupados() {
+                const response = await fetch(`/agendamentos/barbeiro/${barbeiroId}`);
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    setHorariosOcupados(data.map(agendamento => ({
+                        inicio: new Date(agendamento.dataHoraInicio),
+                        fim: new Date(agendamento.dataHoraFim)
+                    })));
+                } else {
+                    setHorariosOcupados([]);
+                }
+            }
+            fetchHorariosOcupados();
+        }
+    }, [barbeiroId, selectedDate, duracao]);
 
-  const handleTimeSlotClick = (time) => {
-    const dateStr = format(selectedDate, 'yyyy-MM-dd');
-    const isBooked = bookedSlots[dateStr]?.includes(time);
+    useEffect(() => {
+        if (duracao && selectedDate) {
+            const horarios = [];
+            const inicioTrabalho = 9;
+            const fimTrabalho = 18;
+            const intervaloAlmocoInicio = 12;
+            const intervaloAlmocoFim = 13;
 
-    if (isBooked) {
-      alert('Este horário já está agendado.');
-      return;
-    }
+            const dia = new Date(selectedDate);
+            dia.setHours(0, 0, 0, 0);
 
-    const confirm = window.confirm(`Você deseja agendar o horário das ${time}?`);
-    if (confirm) {
-      const newBookedSlots = { ...bookedSlots, [dateStr]: [...(bookedSlots[dateStr] || []), time] };
-      setBookedSlots(newBookedSlots);
-      alert('Horário agendado com sucesso!');
-    }
-  };
+            for (let hora = inicioTrabalho; hora < fimTrabalho; hora += (duracao === 30 ? 0.5 : 1)) {
+                if (hora >= intervaloAlmocoInicio && hora < intervaloAlmocoFim) continue;
 
-  const generateTimeSlots = (date) => {
-    const slots = [];
-    let startTime = setHours(setMinutes(date, 0), 9); // Inicia às 9:00
-    const endTime = setHours(setMinutes(date, 0), 18); // Termina às 18:00
+                const inicio = new Date(dia);
+                inicio.setHours(hora, 0, 0, 0);
+                const fim = new Date(inicio.getTime() + duracao * 60000);
 
-    while (startTime < endTime) {
-      if (getDay(startTime) !== 12 && getDay(startTime) !== 13) { // Ajuste para não incluir 12-13h
-        const timeString = format(startTime, 'HH:mm');
-        slots.push(
-          <button key={timeString} disabled={bookedSlots[format(date, 'yyyy-MM-dd')]?.includes(timeString)} className="time-slot-btn" onClick={() => handleTimeSlotClick(timeString)}>
-            {timeString}
-          </button>
+                horarios.push({ inicio, fim });
+
+                if (duracao === 30) {
+                    const inicioMeiaHora = new Date(inicio.getTime() + 30 * 60000);
+                    if (inicioMeiaHora.getHours() < fimTrabalho && (inicioMeiaHora.getHours() < intervaloAlmocoInicio || inicioMeiaHora.getHours() >= intervaloAlmocoFim)) {
+                        horarios.push({ inicio: inicioMeiaHora, fim: new Date(inicioMeiaHora.getTime() + 30 * 60000) });
+                    }
+                }
+            }
+
+            setHorariosDisponiveis(horarios);
+        }
+    }, [duracao, selectedDate]);
+
+    const handleServicoChange = (event) => {
+        const selectedServico = event.target.value;
+        setServico(selectedServico);
+
+        switch (selectedServico) {
+            case 'Barba':
+            case 'Corte':
+            case 'Sobrancelha':
+                setDuracao(30);
+                break;
+            case 'Barba e Corte':
+            case 'Completo':
+                setDuracao(60);
+                break;
+            default:
+                setDuracao(0);
+                break;
+        }
+    };
+
+    const handleSubmit = async (inicio) => {
+        const clienteId = localStorage.getItem("clienteId");
+        if (!clienteId) {
+            alert('Cliente não está logado');
+            return;
+        }
+
+        const fim = new Date(inicio.getTime() + duracao * 60000);
+        const agendamento = {
+            cliente: { id: clienteId },
+            barbeiro: { id: barbeiroId },
+            servico,
+            duracao,
+            dataHoraInicio: inicio.toISOString(),
+            dataHoraFim: fim.toISOString()
+        };
+
+        const response = await fetch('/agendamentos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(agendamento),
+        });
+
+        if (response.ok) {
+            alert('Agendamento criado com sucesso!');
+            navigate('/'); // Redireciona o usuário após o agendamento
+        } else {
+            const errorText = await response.text();
+            alert(`Erro ao criar agendamento: ${errorText}`);
+        }
+    };
+
+    const isHorarioDisponivel = (inicio) => {
+        return !horariosOcupados.some(({ inicio: ocupadoInicio, fim: ocupadoFim }) =>
+            (inicio >= ocupadoInicio && inicio < ocupadoFim)
         );
-      }
-      startTime = addMinutes(startTime, 30); // Incrementa de 30 em 30 minutos
-    }
+    };
 
-    return slots;
-  };
+    return (
+        <div>
+            <select value={barbeiroId} onChange={(e) => setBarbeiroId(e.target.value)} required>
+                <option value="">Selecione um barbeiro</option>
+                {barbeiros.map(barbeiro => (
+                    <option key={barbeiro.id} value={barbeiro.id}>{barbeiro.nome} {barbeiro.sobrenome}</option>
+                ))}
+            </select>
 
-  return (
-    <div className="agendamento-layout">
-      <div className="calendar-container">
-        <DatePicker
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          filterDate={isWeekday}
-          minDate={new Date()} // Bloqueia datas anteriores ao dia atual
-          inline
-        />
-      </div>
-      <div className="time-slots-container">
-        {selectedDate && generateTimeSlots(selectedDate)}
-      </div>
-      <button className="back-btn" onClick={() => navigate('/')}>Voltar</button>
-    </div>
-  );
+            {barbeiroId && (
+                <select value={servico} onChange={handleServicoChange} required>
+                    <option value="">Selecione um serviço</option>
+                    <option value="Barba">Barba</option>
+                    <option value="Corte">Corte</option>
+                    <option value="Barba e Corte">Barba e Corte</option>
+                    <option value="Sobrancelha">Sobrancelha</option>
+                    <option value="Completo">Completo</option>
+                </select>
+            )}
+
+            {servico && (
+                <DatePicker
+                    selected={selectedDate}
+                    onChange={date => setSelectedDate(date)}
+                    dateFormat="dd/MM/yyyy"
+                    minDate={new Date(new Date().setDate(new Date().getDate() + 1))}
+                    filterDate={date => date.getDay() !== 0}
+                    placeholderText="Selecione um dia"
+                />
+            )}
+
+            <div>
+                {horariosDisponiveis.map(({ inicio }) => (
+                    <button
+                        key={inicio}
+                        onClick={() => handleSubmit(inicio)}
+                        disabled={!isHorarioDisponivel(inicio)}
+                    >
+                        {inicio.toLocaleString('pt-BR', { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export default Agendamento;

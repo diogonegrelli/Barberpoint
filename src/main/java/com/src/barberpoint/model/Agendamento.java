@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,22 +17,30 @@ public class Agendamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idAgendamento")
+    @Column(name = "id_agendamento")
     private Long id;
 
-    @Column(name = "idCliente")
-    private Long idCliente;
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
 
-    @Column(name = "idBarbeiro")
-    private Long idBarbeiro;
+    @ManyToOne
+    @JoinColumn(name = "id_barbeiro", nullable = false)
+    private Barbeiro barbeiro;
 
-    @Column(name = "dataHora")
-    private LocalDateTime dataHora;
+    @Column(name = "servico")
+    private String servico;
 
-    @Column(name = "idServico")
-    private Long idServico;
+    @Column(name = "duracao")
+    private int duracao;
 
-    // Getters e Setters
+    @Column(name = "data_hora_inicio", nullable = false)
+    private LocalDateTime dataHoraInicio;
+
+    @Column(name = "data_hora_fim", nullable = false)
+    private LocalDateTime dataHoraFim;
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -39,35 +49,51 @@ public class Agendamento {
         this.id = id;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public Long getIdBarbeiro() {
-        return idBarbeiro;
+    public Barbeiro getBarbeiro() {
+        return barbeiro;
     }
 
-    public void setIdBarbeiro(Long idBarbeiro) {
-        this.idBarbeiro = idBarbeiro;
+    public void setBarbeiro(Barbeiro barbeiro) {
+        this.barbeiro = barbeiro;
     }
 
-    public LocalDateTime getDataHora() {
-        return dataHora;
+    public String getServico() {
+        return servico;
     }
 
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
+    public void setServico(String servico) {
+        this.servico = servico;
     }
 
-    public Long getIdServico() {
-        return idServico;
+    public int getDuracao() {
+        return duracao;
     }
 
-    public void setIdServico(Long idServico) {
-        this.idServico = idServico;
+    public void setDuracao(int duracao) {
+        this.duracao = duracao;
+    }
+
+    public LocalDateTime getDataHoraInicio() {
+        return dataHoraInicio;
+    }
+
+    public void setDataHoraInicio(LocalDateTime dataHoraInicio) {
+        this.dataHoraInicio = dataHoraInicio;
+    }
+
+    public LocalDateTime getDataHoraFim() {
+        return dataHoraFim;
+    }
+
+    public void setDataHoraFim(LocalDateTime dataHoraFim) {
+        this.dataHoraFim = dataHoraFim;
     }
 }

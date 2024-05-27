@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
@@ -59,13 +60,17 @@ public class ClienteController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credenciais) {
-        String email = credenciais.get("email");
-        String senha = credenciais.get("senha");
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String senha = loginData.get("senha");
 
-        return clienteService.autenticar(email, senha)
-                .map(cliente -> ResponseEntity.ok().body("Login bem-sucedido!"))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos."));
+        Optional<Cliente> cliente = clienteService.autenticar(email, senha);
+
+        if (cliente.isPresent()) {
+            return ResponseEntity.ok(cliente.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos.");
+        }
     }
 
 }

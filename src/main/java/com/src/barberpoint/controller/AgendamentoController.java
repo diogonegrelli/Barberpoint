@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/agendamentos")
@@ -15,43 +15,26 @@ public class AgendamentoController {
     @Autowired
     private AgendamentoService agendamentoService;
 
-    @GetMapping
-    public List<Agendamento> getAllAgendamentos() {
-        return agendamentoService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Agendamento> getAgendamentoById(@PathVariable Long id) {
-        return agendamentoService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
     @PostMapping
-    public Agendamento createAgendamento(@RequestBody Agendamento agendamento) {
-        return agendamentoService.save(agendamento);
-    }
+    public ResponseEntity<String> createAgendamento(@RequestBody Agendamento agendamento) {
+        if (agendamento.getCliente() == null || agendamento.getCliente().getId() == null) {
+            return ResponseEntity.badRequest().body("Cliente não pode ser nulo.");
+        }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Agendamento> updateAgendamento(@PathVariable Long id,
-            @RequestBody Agendamento agendamentoDetails) {
-        return agendamentoService.findById(id)
-                .map(agendamento -> {
-                    agendamento.setIdCliente(agendamentoDetails.getIdCliente());
-                    agendamento.setIdBarbeiro(agendamentoDetails.getIdBarbeiro());
-                    agendamento.setDataHora(agendamentoDetails.getDataHora());
-                    agendamento.setIdServico(agendamentoDetails.getIdServico());
-                    Agendamento updatedAgendamento = agendamentoService.save(agendamento);
-                    return ResponseEntity.ok(updatedAgendamento);
-                }).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+        LocalDateTime start = agendamento.getDataHoraInicio();
+        LocalDateTime end = start.plusMinutes(agendamento.getDuracao());
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAgendamento(@PathVariable Long id) {
-        return agendamentoService.findById(id)
-                .map(agendamento -> {
-                    agendamentoService.deleteById(id);
-                    return ResponseEntity.ok().build();
-                }).orElseGet(() -> ResponseEntity.notFound().build());
+        try {
+            if (agendamentoService.isBarbeiroAvailable(agendamento.getBarbeiro().getId(), start, end)) {
+                agendamento.setDataHoraFim(end);
+                agendamentoService.save(agendamento);
+                return ResponseEntity.ok("Agendamento criado com sucesso.");
+            } else {
+                return ResponseEntity.status(409).body("Horário não disponível para o barbeiro selecionado.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Erro ao criar agendamento: " + e.getMessage());
+        }
     }
 }

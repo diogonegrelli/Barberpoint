@@ -15,7 +15,7 @@ function CadastroBarbeiro() {
         const selectedServico = event.target.value;
         setServico(selectedServico);
 
-        // Set duration based on selected service
+
         switch (selectedServico) {
             case 'Barba':
             case 'Corte':
