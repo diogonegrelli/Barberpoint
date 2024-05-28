@@ -42,6 +42,7 @@ BarberPoint é uma aplicação web destinada a facilitar o gerenciamento de barb
 
 - **Clonar o repositório do backend:** Execute `git clone <url-do-repositório-backend>` para obter o código-fonte.
 - **Construir o projeto:** Acesse o diretório com `cd backend` e construa o projeto com `./mvnw clean install`.
+- **Setar a variável do JAVA_HOME:** Necessário setar a variável com o path do seu executável do jdk.
 - **Configurar o arquivo `application.properties`:** Ajuste as propriedades de conexão com o banco de dados adicionando as seguintes linhas:
   - spring.datasource.url=jdbc:mysql://localhost:3306/barberpoint
   - spring.datasource.username=<seu-usuario>
