@@ -34,7 +34,7 @@ function Home() {
         )}
       </div>
       <div className="footer">
-        Desenvolvido por @irvanlei
+        Desenvolvido por @Equipe11
       </div>
     </div>
   );

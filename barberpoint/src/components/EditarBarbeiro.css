@@ -1,0 +1,22 @@
+.container {
+    margin-top: 20px;
+    max-width: 600px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    margin-top: 10px;
+}
+
+.btn-secondary {
+    margin-top: 10px;
+    margin-left: 10px;
+}

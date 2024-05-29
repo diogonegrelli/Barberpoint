@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import './GerenciarBarbeiros.css'; // Import the CSS file
 
 function EditarBarbeiro() {
     const { idBarbeiro } = useParams();
@@ -50,13 +51,13 @@ function EditarBarbeiro() {
         }
     };
 
-    if (loading) return <div>Carregando...</div>;
-    if (error) return <div>Erro: {error}</div>;
+    if (loading) return <div className="loading">Carregando...</div>;
+    if (error) return <div className="error">Erro: {error}</div>;
 
     return (
-        <div>
+        <div className="editar-barbeiro-container">
             <h2>Editar Barbeiro</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="editar-barbeiro-form">
                 <label>
                     Nome:
                     <input type="text" name="nome" value={barbeiro.nome} onChange={handleChange} required />
@@ -69,8 +70,10 @@ function EditarBarbeiro() {
                     Senha: (altere para mudar)
                     <input type="password" name="senha" value={barbeiro.senha} onChange={handleChange} />
                 </label>
-                <button type="submit">Salvar Alterações</button>
-                <Link to="/gerenciar-barbeiros">Cancelar</Link>
+                <div className="buttons">
+                    <button type="submit" className="btn btn-save">Salvar Alterações</button>
+                    <Link to="/gerenciar-barbeiros" className="btn btn-cancel">Cancelar</Link>
+                </div>
             </form>
         </div>
     );

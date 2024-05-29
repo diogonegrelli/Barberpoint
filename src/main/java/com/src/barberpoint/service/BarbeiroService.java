@@ -26,7 +26,12 @@ public class BarbeiroService {
         return barbeiroRepository.save(barbeiro);
     }
 
-    public void deleteById(Long id) {
-        barbeiroRepository.deleteById(id);
+    public boolean deleteById(Long id) {
+        if (barbeiroRepository.existsById(id)) {
+            barbeiroRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

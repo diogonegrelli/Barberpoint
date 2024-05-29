@@ -32,4 +32,27 @@ public class BarbeiroController {
         Barbeiro savedBarbeiro = barbeiroService.save(barbeiro);
         return ResponseEntity.ok(savedBarbeiro);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBarbeiro(@PathVariable Long id) {
+        if (barbeiroService.deleteById(id)) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Barbeiro> updateBarbeiro(@PathVariable Long id, @RequestBody Barbeiro barbeiroDetails) {
+        return barbeiroService.findById(id).map(barbeiro -> {
+            barbeiro.setNome(barbeiroDetails.getNome());
+            barbeiro.setSobrenome(barbeiroDetails.getSobrenome());
+            barbeiro.setEmail(barbeiroDetails.getEmail());
+            barbeiro.setTelefone(barbeiroDetails.getTelefone());
+            barbeiro.setServico(barbeiroDetails.getServico());
+            Barbeiro updatedBarbeiro = barbeiroService.save(barbeiro);
+            return ResponseEntity.ok(updatedBarbeiro);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }
