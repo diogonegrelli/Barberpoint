@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import barbershopImage from '../assets/images/barbershop.jpg'; 
+import './Home.css'; 
 
 function Home() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ function Home() {
   };
 
   return (
-    <div style={{ backgroundImage: `url(${barbershopImage})`, height: '100vh', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className="home-container">
       <div className="header">
         <div className="header-content">
           <h1>BarberPoint</h1>
@@ -23,12 +23,12 @@ function Home() {
           )}
         </div>
       </div>
-      <div className="container" style={{ marginTop: '20vh' }}>
+      <div className="main-content">
         <h2>Bem-vindo à BarberPoint</h2>
         <p>Agende seu horário de forma fácil e rápida!</p>
         <p>O controle dos seus serviços aqui.</p>
         {isLoggedIn && (
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <div className="action-container">
             <Link to="/agendar" className="action-btn">Agende seu horário</Link>
           </div>
         )}

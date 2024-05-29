@@ -6,9 +6,27 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const validateEmail = (email) => {
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return re.test(String(email).toLowerCase());
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (!validateEmail(email)) {
+            setError("Email inválido.");
+            return;
+        }
+
+        if (password.length < 6) {
+            setError("A senha deve ter pelo menos 6 caracteres.");
+            return;
+        }
+
+        setLoading(true);
 
         try {
             const response = await fetch('/clientes/login', {
@@ -20,7 +38,7 @@ function Login() {
             });
 
             if (!response.ok) {
-                const errorMessage = await response.text(); // capturar mensagem de erro
+                const errorMessage = await response.text();
                 throw new Error(errorMessage || 'Email ou senha inválidos.');
             }
 
@@ -31,6 +49,8 @@ function Login() {
             navigate('/');
         } catch (error) {
             setError(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -53,7 +73,9 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Entrar</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? "Carregando..." : "Entrar"}
+                </button>
             </form>
             <div className="link-container">
                 Não tem uma conta? <Link to="/register">Cadastre-se</Link><br/>

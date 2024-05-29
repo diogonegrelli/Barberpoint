@@ -1,0 +1,81 @@
+/* Home.css */
+
+.home-container {
+    background-image: url('../assets/images/barbershop.jpg');
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .header, .footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header h1 {
+    margin: 0;
+  }
+  
+  .header-btn {
+    background-color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  .main-content {
+    text-align: center;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 600px;
+  }
+  
+  .action-container {
+    margin-top: 20px;
+  }
+  
+  .action-btn {
+    background-color: #000;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+  .footer {
+    font-size: 0.8rem;
+  }
+  
+  @media (max-width: 768px) {
+    .header-content {
+      flex-direction: column;
+    }
+  
+    .header-btn {
+      margin-top: 1rem;
+    }
+  
+    .main-content {
+      padding: 1rem;
+      max-width: 90%;
+    }
+  
+    .action-btn {
+      padding: 0.5rem;
+    }
+  }
+  
