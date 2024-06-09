@@ -27,7 +27,7 @@ function Login() {
         }
 
         // Redirecionar para AdminHome se as credenciais forem de administrador
-        if (email === 'admin@admin.com' && password === 'admin1') {
+        if (email === 'admin@admin.com' && password === 'admin') {
             navigate('/admin-home');
             return;
         }
@@ -51,6 +51,7 @@ function Login() {
             const cliente = await response.json();
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("clienteId", cliente.id); 
+            localStorage.setItem("clienteNome", cliente.nome); // Armazenar o nome do cliente
             alert('Login bem-sucedido!');
             navigate('/');
         } catch (error) {

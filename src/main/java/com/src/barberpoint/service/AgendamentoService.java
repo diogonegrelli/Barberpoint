@@ -34,4 +34,9 @@ public class AgendamentoService {
             return false;
         }
     }
+
+    public List<Agendamento> findByClienteId(Long clienteId) {
+        return agendamentoRepository.findByClienteId(clienteId);
+    }
+
 }

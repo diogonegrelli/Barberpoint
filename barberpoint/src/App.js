@@ -11,8 +11,9 @@ import CadastroBarbeiro from "./components/CadastroBarbeiro";
 import GerenciarBarbeiros from "./components/GerenciarBarbeiros";
 import EditarBarbeiro from "./components/EditarBarbeiro";
 import AgendamentoBarbeiro from './components/AgendamentoBarbeiro';
-import AdminHome from './components/AdminHome'; // Importando o novo componente
-import EditarAgendamento from './components/EditarAgendamento'; // Importando o componente de edição de agendamento
+import AdminHome from './components/AdminHome';
+import EditarAgendamento from './components/EditarAgendamento';
+import MeusAgendamentos from './components/MeusAgendamentos'; // Importar o novo componente
 import './App.css';
 
 function App() {
@@ -29,8 +30,9 @@ function App() {
         <Route path="/gerenciar-barbeiros" element={<GerenciarBarbeiros />} />
         <Route path="/editar-barbeiro/:idBarbeiro" element={<EditarBarbeiro />} />
         <Route path="/agendamentos" element={<AgendamentoBarbeiro />} />
-        <Route path="/admin-home" element={<AdminHome />} /> {/* Nova rota para AdminHome */}
-        <Route path="/editar-agendamento/:id" element={<EditarAgendamento />} /> {/* Nova rota para editar agendamento */}
+        <Route path="/admin-home" element={<AdminHome />} />
+        <Route path="/editar-agendamento/:id" element={<EditarAgendamento />} />
+        <Route path="/meus-agendamentos" element={<MeusAgendamentos />} /> {/* Nova rota para Meus Agendamentos */}
       </Routes>
     </Router>
   );

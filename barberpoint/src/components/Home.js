@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './Home.css'; 
 
 function Home() {
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const [clienteNome, setClienteNome] = useState('');
+
+  useEffect(() => {
+    const nome = localStorage.getItem('clienteNome');
+    if (nome) {
+      setClienteNome(nome);
+    }
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn"); // Remove o estado de login
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("clienteId");
+    localStorage.removeItem("clienteNome");
     navigate('/login');
   };
 
@@ -17,7 +27,15 @@ function Home() {
         <div className="header-content">
           <h1>BarberPoint</h1>
           {isLoggedIn ? (
-            <button onClick={handleLogout} className="header-btn">Logout</button>
+            <Link to="/meus-agendamentos" className="header-btn">Meus Agendamentos</Link>
+          ) : (
+            <Link to="/login" className="header-btn">Login</Link>
+          )}
+          {isLoggedIn ? (
+            <div className="user-actions">
+              <span>Bem vindo(a), {clienteNome}</span>
+              <button onClick={handleLogout} style={{ marginLeft: '10px' }}className="header-btn">Logout</button>
+            </div>
           ) : (
             <Link to="/login" className="header-btn">Login</Link>
           )}
