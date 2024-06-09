@@ -65,7 +65,7 @@ function CadastroBarbeiro() {
     };
 
     const handleNavigateHome = () => {
-        navigate('/'); // Função para navegar para a Home
+        navigate('/admin-home'); // Função para navegar para a Home
     };
 
     return (
@@ -84,7 +84,7 @@ function CadastroBarbeiro() {
                 <option value="Completo">Completo</option>
             </select>
             <button type="submit">Cadastrar</button>
-            <button onClick={handleNavigateHome} style={{ marginTop: '10px' }}>HOME</button>
+            <button onClick={handleNavigateHome} style={{ marginTop: '10px' }}>Painel</button>
         </form>
     );
 }

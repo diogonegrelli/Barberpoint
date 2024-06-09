@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -16,32 +15,45 @@ public class AgendamentoController {
     @Autowired
     private AgendamentoService agendamentoService;
 
-    @PostMapping
-    public ResponseEntity<String> createAgendamento(@RequestBody Agendamento agendamento) {
-        if (agendamento.getCliente() == null || agendamento.getCliente().getId() == null) {
-            return ResponseEntity.badRequest().body("Cliente não pode ser nulo.");
-        }
-
-        LocalDateTime start = agendamento.getDataHoraInicio();
-        LocalDateTime end = start.plusMinutes(agendamento.getDuracao());
-
-        try {
-            if (agendamentoService.isBarbeiroAvailable(agendamento.getBarbeiro().getId(), start, end)) {
-                agendamento.setDataHoraFim(end);
-                agendamentoService.save(agendamento);
-                return ResponseEntity.ok("Agendamento criado com sucesso.");
-            } else {
-                return ResponseEntity.status(409).body("Horário não disponível para o barbeiro selecionado.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Erro ao criar agendamento: " + e.getMessage());
-        }
-    }
-
     @GetMapping
     public List<Agendamento> getAllAgendamentos() {
         return agendamentoService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Agendamento> getAgendamentoById(@PathVariable Long id) {
+        return agendamentoService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<Agendamento> createAgendamento(@RequestBody Agendamento agendamento) {
+        Agendamento savedAgendamento = agendamentoService.save(agendamento);
+        return ResponseEntity.ok(savedAgendamento);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Agendamento> updateAgendamento(@PathVariable Long id,
+            @RequestBody Agendamento agendamentoDetails) {
+        return agendamentoService.findById(id).map(agendamento -> {
+            agendamento.setDataHoraInicio(agendamentoDetails.getDataHoraInicio());
+            agendamento.setDataHoraFim(agendamentoDetails.getDataHoraFim());
+            agendamento.setDuracao(agendamentoDetails.getDuracao());
+            agendamento.setServico(agendamentoDetails.getServico());
+            agendamento.setCliente(agendamentoDetails.getCliente());
+            agendamento.setBarbeiro(agendamentoDetails.getBarbeiro());
+            Agendamento updatedAgendamento = agendamentoService.save(agendamento);
+            return ResponseEntity.ok(updatedAgendamento);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAgendamento(@PathVariable Long id) {
+        if (agendamentoService.deleteById(id)) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

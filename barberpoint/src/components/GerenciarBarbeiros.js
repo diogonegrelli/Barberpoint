@@ -34,7 +34,7 @@ function GerenciarBarbeiros() {
     };
 
     const handleNavigateHome = () => {
-        navigate('/'); // Função para navegar para a Home
+        navigate('/admin-home'); // Função para navegar para a Home
     };
 
     const handleEdit = (id) => {
@@ -44,7 +44,7 @@ function GerenciarBarbeiros() {
     return (
         <div>
             <h2>Gerenciar Barbeiros</h2>
-            <button onClick={handleNavigateHome} style={{ marginBottom: '10px' }}>HOME</button>
+            <button onClick={handleNavigateHome} style={{ marginBottom: '10px' }}>Painel</button>
             <table>
                 <thead>
                     <tr>
