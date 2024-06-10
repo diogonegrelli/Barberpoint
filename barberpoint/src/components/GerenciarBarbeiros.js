@@ -63,7 +63,7 @@ function GerenciarBarbeiros() {
         <div>
             <h2>Gerenciar Barbeiros</h2>
             {mensagem && <div className="mensagem-sucesso">{mensagem}</div>}
-            <button onClick={handleNavigateHome} style={{ marginBottom: '10px' }}>Painel</button>
+            
             <table>
                 <thead>
                     <tr>
@@ -73,6 +73,7 @@ function GerenciarBarbeiros() {
                         <th>Telefone</th>
                         <th>Serviço</th>
                         <th>Ações</th>
+                        <th><button onClick={handleNavigateHome}>Painel</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,7 +84,7 @@ function GerenciarBarbeiros() {
                             <td>{barbeiro.email}</td>
                             <td>{barbeiro.telefone}</td>
                             <td>{barbeiro.servico}</td>
-                            <td>
+                            <td className="actions">
                                 <button onClick={() => handleEdit(barbeiro.id)}>Editar</button>
                                 <button onClick={() => handleDelete(barbeiro.id)}>Deletar</button>
                             </td>

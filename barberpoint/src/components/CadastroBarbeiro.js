@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './CadastroBarbeiro.css'; // Import the updated CSS file
 
 function CadastroBarbeiro() {
     const navigate = useNavigate();
@@ -14,7 +15,6 @@ function CadastroBarbeiro() {
     const handleServicoChange = (event) => {
         const selectedServico = event.target.value;
         setServico(selectedServico);
-
 
         switch (selectedServico) {
             case 'Barba':
@@ -70,6 +70,7 @@ function CadastroBarbeiro() {
 
     return (
         <form onSubmit={handleSubmit}>
+            <h2>Cadastrar Barbeiro</h2>
             <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
             <input type="text" placeholder="Sobrenome" value={sobrenome} onChange={(e) => setSobrenome(e.target.value)} required />
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -84,7 +85,7 @@ function CadastroBarbeiro() {
                 <option value="Completo">Completo</option>
             </select>
             <button type="submit">Cadastrar</button>
-            <button onClick={handleNavigateHome} style={{ marginTop: '10px' }}>Painel</button>
+            <button type="button" onClick={handleNavigateHome}>Painel</button>
         </form>
     );
 }

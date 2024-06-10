@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import './EditarCliente.css'; // Import the updated CSS file
 
 function EditarCliente() {
-    const { idCliente } = useParams(); // Asegure-se que 'id' corresponde ao parâmetro definido nas suas rotas
+    const { idCliente } = useParams();
     const navigate = useNavigate();
     const [cliente, setCliente] = useState({ nome: '', email: '', senha: '', sobrenome: '', telefone: '' });
     const [error, setError] = useState('');
@@ -28,7 +29,6 @@ function EditarCliente() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Remove 'senha' do objeto se você não deseja atualizar a senha
         const updatedCliente = { nome: cliente.nome, email: cliente.email, senha: cliente.senha, sobrenome: cliente.sobrenome, telefone: cliente.telefone };
 
         try {
@@ -48,29 +48,30 @@ function EditarCliente() {
     return (
         <div className="container">
             <h2>Editar Cliente</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error">{error}</p>}
             <form onSubmit={handleSubmit}>
-                <label>
-                    Nome:
+                <div className="form-group">
+                    <label>Nome:</label>
                     <input type="text" name="nome" value={cliente.nome} onChange={handleChange} required />
-                </label>
-                <label>
-                    Sobrenome:
+                </div>
+                <div className="form-group">
+                    <label>Sobrenome:</label>
                     <input type="text" name="sobrenome" value={cliente.sobrenome} onChange={handleChange} />
-                </label>
-                <label>
-                    Email:
+                </div>
+                <div className="form-group">
+                    <label>Email:</label>
                     <input type="email" name="email" value={cliente.email} onChange={handleChange} required />
-                </label>
-                <label>
-                    Telefone:
+                </div>
+                <div className="form-group">
+                    <label>Telefone:</label>
                     <input type="text" name="telefone" value={cliente.telefone} onChange={handleChange} />
-                </label>
-                <label>
-                    Senha (deixe em branco para manter a atual):
+                </div>
+                <div className="form-group">
+                    <label>Senha (deixe em branco para manter a atual):</label>
                     <input type="password" name="senha" value={cliente.senha} onChange={handleChange} />
-                </label>
+                </div>
                 <button type="submit">Salvar Alterações</button>
+                <Link to="/gerenciar-barbeiros" className="btn-secondary">Cancelar</Link>
             </form>
         </div>
     );

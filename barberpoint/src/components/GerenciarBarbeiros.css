@@ -2,101 +2,79 @@
 
 body {
     font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa;
-}
-
-.editar-barbeiro-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    margin-bottom: 20px;
     text-align: center;
-    font-size: 24px;
-    color: #333;
+    color: #343a40;
+    margin-top: 20px;
 }
 
-.editar-barbeiro-form label {
-    display: block;
-    margin-bottom: 10px;
-    color: #555;
-}
-
-.editar-barbeiro-form input {
-    width: calc(100% - 22px);
-    padding: 10px;
+.mensagem-sucesso {
+    color: #28a745;
+    text-align: center;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
 }
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.btn {
-    padding: 10px 20px;
+button {
+    background-color: #007bff;
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
 }
 
-.btn-save {
-    background-color: #28a745;
-    color: white;
+button:hover {
+    background-color: #0056b3;
 }
 
-.btn-cancel {
-    background-color: #dc3545;
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #343a40;
     color: white;
-    text-decoration: none;
-    display: inline-block;
     text-align: center;
 }
 
-.btn:hover {
-    opacity: 0.9;
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-@media (max-width: 600px) {
-    .editar-barbeiro-container {
-        padding: 15px;
-    }
-
-    .editar-barbeiro-form label {
-        margin-bottom: 5px;
-    }
-
-    .editar-barbeiro-form input {
-        margin-bottom: 15px;
-    }
-
-    .buttons {
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-        margin-bottom: 10px;
-    }
+tr:hover {
+    background-color: #ddd;
 }
 
-.mensagem-sucesso {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 1rem;
-    border: 1px solid #c3e6cb;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    text-align: center;
+.actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.actions button {
+    flex: 1;
+    margin: 0 5px;
+}
+
+.actions button:first-child {
+    margin-left: 0;
+}
+
+.actions button:last-child {
+    margin-right: 0;
 }

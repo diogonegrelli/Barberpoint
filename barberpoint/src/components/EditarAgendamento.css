@@ -1,4 +1,4 @@
-/* EditarBarbeiro.css */
+/* EditarAgendamento.css */
 
 .container {
     margin-top: 20px;
@@ -15,26 +15,26 @@ h2 {
     color: #343a40;
 }
 
-.form-group {
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
     margin-bottom: 15px;
     text-align: left;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-group input {
+input, select {
     width: 100%;
     padding: 10px;
+    margin-top: 5px;
     border: 1px solid #ced4da;
     border-radius: 5px;
     font-size: 16px;
 }
 
-.btn-primary {
+button {
     background-color: #007bff;
     color: white;
     border: none;
@@ -45,27 +45,19 @@ h2 {
     font-size: 16px;
 }
 
-.btn-primary:hover {
+button:hover {
     background-color: #0056b3;
 }
 
-.btn-secondary {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 10px;
-    margin-left: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+button[type="button"] {
+    background-color: #6c757d;
 }
 
-.btn-secondary:hover {
-    background-color: #c82333;
+button[type="button"]:hover {
+    background-color: #5a6268;
 }
 
-.loading, .error {
+.error {
     margin-top: 20px;
     font-size: 18px;
     color: #dc3545;

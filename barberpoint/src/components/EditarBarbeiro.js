@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import './GerenciarBarbeiros.css'; // Import the CSS file
+import './EditarBarbeiro.css'; // Import the updated CSS file
 
 function EditarBarbeiro() {
     const { idBarbeiro } = useParams();
@@ -55,24 +55,24 @@ function EditarBarbeiro() {
     if (error) return <div className="error">Erro: {error}</div>;
 
     return (
-        <div className="editar-barbeiro-container">
+        <div className="container">
             <h2>Editar Barbeiro</h2>
             <form onSubmit={handleSubmit} className="editar-barbeiro-form">
-                <label>
-                    Nome:
+                <div className="form-group">
+                    <label>Nome:</label>
                     <input type="text" name="nome" value={barbeiro.nome} onChange={handleChange} required />
-                </label>
-                <label>
-                    Sobrenome:
+                </div>
+                <div className="form-group">
+                    <label>Sobrenome:</label>
                     <input type="text" name="sobrenome" value={barbeiro.sobrenome} onChange={handleChange} required />
-                </label>
-                <label>
-                    Senha: (altere para mudar)
+                </div>
+                <div className="form-group">
+                    <label>Senha: (altere para mudar)</label>
                     <input type="password" name="senha" value={barbeiro.senha} onChange={handleChange} />
-                </label>
+                </div>
                 <div className="buttons">
-                    <button type="submit" className="btn btn-save">Salvar Alterações</button>
-                    <Link to="/gerenciar-barbeiros" className="btn btn-cancel">Cancelar</Link>
+                    <button type="submit" className="btn-primary">Salvar Alterações</button>
+                    <Link to="/gerenciar-barbeiros" className="btn-secondary">Cancelar</Link>
                 </div>
             </form>
         </div>

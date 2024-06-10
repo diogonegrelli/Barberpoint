@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function GerenciarClientes() {
     const [clientes, setClientes] = useState([]);
@@ -50,6 +50,10 @@ function GerenciarClientes() {
         }
     };
 
+    const handleEdit = (id) => {
+        navigate(`/editar-cliente/${id}`);
+    };
+
     const handleNavigateHome = () => {
         navigate('/admin-home'); // Função para navegar para a Home
     };
@@ -58,13 +62,13 @@ function GerenciarClientes() {
         <div>
             <h2>Gerenciar Clientes</h2>
             {mensagem && <div className="mensagem-sucesso">{mensagem}</div>}
-            <button onClick={handleNavigateHome} style={{ marginBottom: '10px' }}>Painel</button>
             <table>
                 <thead>
                     <tr>
                         <th>Nome</th>
                         <th>Email</th>
                         <th>Ações</th>
+                        <th><button onClick={handleNavigateHome}>Painel</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,7 +77,7 @@ function GerenciarClientes() {
                             <td>{cliente.nome}</td>
                             <td>{cliente.email}</td>
                             <td>
-                                <Link to={`/editar-cliente/${cliente.id}`}>Editar</Link>
+                                <button onClick={() => handleEdit(cliente.id)}>Editar</button>
                                 {' | '}
                                 <button onClick={() => handleDelete(cliente.id)}>Deletar</button>
                             </td>
