@@ -29,7 +29,7 @@ function Home() {
           {isLoggedIn ? (
             <Link to="/meus-agendamentos" className="header-btn">Meus Agendamentos</Link>
           ) : (
-            <Link to="/login" className="header-btn">Login</Link>
+            <Link to="/login" ></Link>
           )}
           {isLoggedIn ? (
             <div className="user-actions">

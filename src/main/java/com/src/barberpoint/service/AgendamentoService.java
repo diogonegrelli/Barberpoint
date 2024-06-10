@@ -2,6 +2,9 @@ package com.src.barberpoint.service;
 
 import com.src.barberpoint.model.Agendamento;
 import com.src.barberpoint.repository.AgendamentoRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,24 @@ public class AgendamentoService {
 
     public List<Agendamento> findByClienteId(Long clienteId) {
         return agendamentoRepository.findByClienteId(clienteId);
+    }
+
+    public boolean existsByClienteId(Long clienteId) {
+        return agendamentoRepository.existsByClienteId(clienteId);
+    }
+
+    @Transactional
+    public void deleteByClienteId(Long clienteId) {
+        agendamentoRepository.deleteByClienteId(clienteId);
+    }
+
+    public boolean existsByBarbeiroId(Long barbeiroId) {
+        return agendamentoRepository.existsByBarbeiroId(barbeiroId);
+    }
+
+    @Transactional
+    public void deleteByBarbeiroId(Long barbeiroId) {
+        agendamentoRepository.deleteByBarbeiroId(barbeiroId);
     }
 
 }

@@ -27,7 +27,7 @@ function Login() {
         }
 
         // Redirecionar para AdminHome se as credenciais forem de administrador
-        if (email === 'admin@admin.com' && password === 'admin') {
+        if (email === 'admin@admin.com' && password === 'admin1') {
             navigate('/admin-home');
             return;
         }

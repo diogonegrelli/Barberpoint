@@ -4,6 +4,7 @@ import './GerenciarBarbeiros.css';
 
 function GerenciarBarbeiros() {
     const [barbeiros, setBarbeiros] = useState([]);
+    const [mensagem, setMensagem] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,14 +23,31 @@ function GerenciarBarbeiros() {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm('Tem certeza que deseja deletar este barbeiro?')) {
-            try {
-                const response = await fetch(`/barbeiros/${id}`, { method: 'DELETE' });
-                if (!response.ok) throw new Error('Erro ao deletar barbeiro');
-                fetchBarbeiros(); // Atualiza a lista após a exclusão
-            } catch (error) {
-                console.error('Falha ao deletar barbeiro:', error);
+        try {
+            const response = await fetch(`/barbeiros/${id}`, { method: 'DELETE' });
+            if (response.status === 409) { // Barbeiro tem agendamentos
+                if (window.confirm('O barbeiro tem agendamentos marcados! Deseja excluir eles para deletar o barbeiro?')) {
+                    const responseWithAgendamentos = await fetch(`/barbeiros/${id}/with-agendamentos`, {
+                        method: 'DELETE',
+                    });
+                    if (!responseWithAgendamentos.ok) throw new Error('Erro ao deletar barbeiro e agendamentos');
+                    setBarbeiros(barbeiros.filter(barbeiro => barbeiro.id !== id));
+                    setMensagem('Barbeiro e agendamentos deletados com sucesso.');
+                    setTimeout(() => {
+                        setMensagem('');
+                    }, 3000);
+                }
+            } else if (!response.ok) {
+                throw new Error('Erro ao deletar barbeiro');
+            } else {
+                setBarbeiros(barbeiros.filter(barbeiro => barbeiro.id !== id));
+                setMensagem('Barbeiro deletado com sucesso.');
+                setTimeout(() => {
+                    setMensagem('');
+                }, 3000);
             }
+        } catch (error) {
+            console.error('Falha ao deletar barbeiro:', error);
         }
     };
 
@@ -44,6 +62,7 @@ function GerenciarBarbeiros() {
     return (
         <div>
             <h2>Gerenciar Barbeiros</h2>
+            {mensagem && <div className="mensagem-sucesso">{mensagem}</div>}
             <button onClick={handleNavigateHome} style={{ marginBottom: '10px' }}>Painel</button>
             <table>
                 <thead>

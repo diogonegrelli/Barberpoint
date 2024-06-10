@@ -1,6 +1,7 @@
 package com.src.barberpoint.controller;
 
 import com.src.barberpoint.model.Cliente;
+import com.src.barberpoint.service.AgendamentoService;
 import com.src.barberpoint.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private AgendamentoService agendamentoService;
 
     @GetMapping
     public List<Cliente> getAllClientes() {
@@ -50,14 +54,14 @@ public class ClienteController {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCliente(@PathVariable Long id) {
-        return clienteService.findById(id)
-                .map(cliente -> {
-                    clienteService.deleteById(id);
-                    return ResponseEntity.ok().build();
-                }).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<?> deleteCliente(@PathVariable Long id) {
+    // return clienteService.findById(id)
+    // .map(cliente -> {
+    // clienteService.deleteById(id);
+    // return ResponseEntity.ok().build();
+    // }).orElseGet(() -> ResponseEntity.notFound().build());
+    // }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
@@ -71,6 +75,22 @@ public class ClienteController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos.");
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
+        if (agendamentoService.existsByClienteId(id)) {
+            return ResponseEntity.status(409).build(); // Conflito - Cliente tem agendamentos
+        }
+        clienteService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/with-agendamentos")
+    public ResponseEntity<Void> deleteClienteWithAgendamentos(@PathVariable Long id) {
+        agendamentoService.deleteByClienteId(id);
+        clienteService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

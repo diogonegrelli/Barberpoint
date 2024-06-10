@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function GerenciarClientes() {
     const [clientes, setClientes] = useState([]);
+    const [mensagem, setMensagem] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,14 +22,31 @@ function GerenciarClientes() {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm('Tem certeza que deseja deletar este cliente?')) {
-            try {
-                const response = await fetch(`/clientes/${id}`, { method: 'DELETE' });
-                if (!response.ok) throw new Error('Erro ao deletar cliente');
-                fetchClientes(); // Atualiza a lista após a exclusão
-            } catch (error) {
-                console.error('Falha ao deletar cliente:', error);
+        try {
+            const response = await fetch(`/clientes/${id}`, { method: 'DELETE' });
+            if (response.status === 409) { // Cliente tem agendamentos
+                if (window.confirm('O cliente tem agendamentos marcados! Deseja excluir eles para deletar o cliente?')) {
+                    const responseWithAgendamentos = await fetch(`/clientes/${id}/with-agendamentos`, {
+                        method: 'DELETE',
+                    });
+                    if (!responseWithAgendamentos.ok) throw new Error('Erro ao deletar cliente e agendamentos');
+                    setClientes(clientes.filter(cliente => cliente.id !== id));
+                    setMensagem('Cliente e agendamentos deletados com sucesso.');
+                    setTimeout(() => {
+                        setMensagem('');
+                    }, 3000);
+                }
+            } else if (!response.ok) {
+                throw new Error('Erro ao deletar cliente');
+            } else {
+                setClientes(clientes.filter(cliente => cliente.id !== id));
+                setMensagem('Cliente deletado com sucesso.');
+                setTimeout(() => {
+                    setMensagem('');
+                }, 3000);
             }
+        } catch (error) {
+            console.error('Falha ao deletar cliente:', error);
         }
     };
 
@@ -39,6 +57,7 @@ function GerenciarClientes() {
     return (
         <div>
             <h2>Gerenciar Clientes</h2>
+            {mensagem && <div className="mensagem-sucesso">{mensagem}</div>}
             <button onClick={handleNavigateHome} style={{ marginBottom: '10px' }}>Painel</button>
             <table>
                 <thead>
