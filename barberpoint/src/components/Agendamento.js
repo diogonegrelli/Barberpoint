@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
+import { useNavigate } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,6 +16,7 @@ function Agendamento() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [horariosDisponiveis, setHorariosDisponiveis] = useState([]);
     const [horariosOcupados, setHorariosOcupados] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchBarbeiros() {
@@ -145,6 +147,10 @@ function Agendamento() {
         );
     };
 
+    const handleNavigateHome = () => {
+        navigate('/'); // Função para navegar para a Home
+      };
+
     const servicos = [
         { nome: 'Barba', duracao: '30 minutos', valor: 'R$ 25,00' },
         { nome: 'Corte', duracao: '30 minutos', valor: 'R$ 30,00' },
@@ -158,6 +164,7 @@ function Agendamento() {
             <ToastContainer />
             <div className="agendamento-header">
                 <h2>Agendar Serviço</h2>
+                <button onClick={handleNavigateHome} style={{ marginBottom: '10px', marginRight: '10px' }}>Voltar</button>
             </div>
             <div className="agendamento-form">
                 <label>

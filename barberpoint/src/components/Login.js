@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Alert, Container, Form, Button } from 'react-bootstrap';
 
 function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
     const [loading, setLoading] = useState(false);
 
     const validateEmail = (email) => {
@@ -52,8 +55,10 @@ function Login() {
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("clienteId", cliente.id); 
             localStorage.setItem("clienteNome", cliente.nome); // Armazenar o nome do cliente
-            alert('Login bem-sucedido!');
-            navigate('/');
+            setSuccess('Login bem-sucedido!');
+            setTimeout(() => {
+                navigate('/');
+            }, 2000);
         } catch (error) {
             setError(error.message);
         } finally {
@@ -62,33 +67,38 @@ function Login() {
     };
 
     return (
-        <div className="container">
+        <Container className="container">
             <h2>Login</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Senha"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit" disabled={loading}>
+            {error && <Alert variant="danger" onClose={() => setError('')} dismissible>{error}</Alert>}
+            {success && <Alert variant="success" onClose={() => setSuccess('')} dismissible>{success}</Alert>}
+            <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="email">
+                    <Form.Control
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+                <Form.Group controlId="password">
+                    <Form.Control
+                        type="password"
+                        placeholder="Senha"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+                <Button type="submit" disabled={loading}>
                     {loading ? "Carregando..." : "Entrar"}
-                </button>
-            </form>
+                </Button>
+            </Form>
             <div className="link-container">
                 Não tem uma conta? <Link to="/register">Cadastre-se</Link><br/>
                 <Link to="/">Voltar para a página inicial</Link>
             </div>
-        </div>
+        </Container>
     );
 }
 
