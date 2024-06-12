@@ -149,7 +149,11 @@ function Agendamento() {
 
     const handleNavigateHome = () => {
         navigate('/'); // Função para navegar para a Home
-      };
+    };
+
+    const handleNavigateAppoiments = () => {
+        navigate('/meus-agendamentos'); // Função para navegar para os agendamentos
+    };
 
     const servicos = [
         { nome: 'Barba', duracao: '30 minutos', valor: 'R$ 25,00' },
@@ -165,6 +169,7 @@ function Agendamento() {
             <div className="agendamento-header">
                 <h2>Agendar Serviço</h2>
                 <button onClick={handleNavigateHome} style={{ marginBottom: '10px', marginRight: '10px' }}>Voltar</button>
+                <button onClick={handleNavigateAppoiments} style={{ marginBottom: '10px', marginRight: '10px' }}>Agendamentos</button>
             </div>
             <div className="agendamento-form">
                 <label>
