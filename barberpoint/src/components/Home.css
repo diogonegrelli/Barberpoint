@@ -1,90 +1,161 @@
 /* Home.css */
 
 .home-container {
-  background-image: url('../assets/images/barbershop.jpg');
-  height: 100vh;
+  background-image: linear-gradient(
+      180deg,
+      rgba(10, 12, 16, 0.82) 0%,
+      rgba(15, 18, 24, 0.72) 50%,
+      rgba(10, 12, 16, 0.9) 100%
+    ),
+    url('../assets/images/barbershop.jpg');
+  min-height: 100vh;
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.header, .footer {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 1rem;
-  text-align: center;
+.header {
+  background: rgba(15, 18, 24, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  color: #f5f7fa;
+  padding: 1.1rem 2.5rem;
 }
 
 .header-content {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-.header h1 {
-  margin: 0;
-}
-
-.header-btn {
-  background-color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-}
-
-.user-info {
-  display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.user-info span {
-  color: #fff;
+.header h1 {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #d4af37;
+  letter-spacing: 1px;
+}
+
+.header-btn {
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  color: #f5f7fa !important;
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-btn:hover {
+  background: #d4af37;
+  color: #0f1218 !important;
+  border-color: #d4af37;
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.35);
+}
+
+.header-btn:empty {
+  display: none;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: #e5e7eb;
+  font-weight: 500;
+}
+
+.user-actions span {
+  color: #f5f7fa;
+  font-size: 0.95rem;
 }
 
 .main-content {
   text-align: center;
   margin: auto;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 2rem;
-  border-radius: 10px;
-  max-width: 600px;
+  background: rgba(20, 24, 33, 0.88);
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  padding: 3.2rem 2.8rem;
+  border-radius: 20px;
+  max-width: 640px;
+  width: 92%;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(14px);
+}
+
+.main-content h2 {
+  font-size: 2.35rem;
+  color: #d4af37;
+  margin-bottom: 1rem;
+}
+
+.main-content p {
+  color: #d1d5db;
+  font-size: 1.08rem;
+  margin-bottom: 0.55rem;
+  line-height: 1.6;
 }
 
 .action-container {
-  margin-top: 20px;
+  margin-top: 28px;
 }
 
 .action-btn {
-  background-color: #000;
-  color: #fff;
-  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #d4af37 0%, #b5891c 100%);
+  color: #0f1218 !important;
+  padding: 0.85rem 2rem;
+  font-weight: 700;
+  font-size: 1rem;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 999px;
   display: inline-block;
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(212, 175, 55, 0.45);
+  color: #0f1218 !important;
 }
 
 .footer {
-  font-size: 0.8rem;
+  background: rgba(12, 15, 20, 0.88);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #9ca3af;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  letter-spacing: 0.4px;
+  position: static;
 }
 
 @media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
+
   .header-content {
     flex-direction: column;
   }
 
-  .header-btn {
-    margin-top: 1rem;
-  }
-
   .main-content {
-    padding: 1rem;
-    max-width: 90%;
+    padding: 2rem 1.5rem;
   }
 
-  .action-btn {
-    padding: 0.5rem;
+  .main-content h2 {
+    font-size: 1.85rem;
   }
 }

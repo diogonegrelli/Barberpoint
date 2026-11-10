@@ -84,7 +84,7 @@ function GerenciarBarbeiros() {
                             <td>{barbeiro.email}</td>
                             <td>{barbeiro.telefone}</td>
                             <td>{barbeiro.servico}</td>
-                            <td className="actions">
+                            <td className="actions" colSpan="2">
                                 <button onClick={() => handleEdit(barbeiro.id)}>Editar</button>
                                 <button onClick={() => handleDelete(barbeiro.id)}>Deletar</button>
                             </td>

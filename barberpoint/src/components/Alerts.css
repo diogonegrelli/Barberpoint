@@ -1,20 +1,20 @@
 /* Alerts.css */
 .alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
-  .alert-error {
-    color: #fff;
-    background-color: #f44336;
-    border: 1px solid #f44336;
-  }
-  
-  .alert-success {
-    color: #fff;
-    background-color: #4caf50;
-    border: 1px solid #4caf50;
-  }
-  
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.alert-error {
+  color: #fca5a5;
+  background-color: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+}
+
+.alert-success {
+  color: #6ee7b7;
+  background-color: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+}
