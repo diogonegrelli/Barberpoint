@@ -1,73 +1,48 @@
 /* EditarBarbeiro.css */
 
-.container {
-    margin-top: 20px;
-    max-width: 600px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #343a40;
-}
-
 .form-group {
-    margin-bottom: 15px;
-    text-align: left;
+  margin-bottom: 14px;
+  text-align: left;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    font-size: 16px;
+.form-group label,
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #e5e7eb;
 }
 
 .btn-primary {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
+  background: linear-gradient(135deg, #d4af37 0%, #b5891c 100%) !important;
+  color: #0f1218 !important;
+  border: none !important;
+  font-weight: 700 !important;
 }
 
 .btn-secondary {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 10px;
-    margin-left: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #e5e7eb !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  padding: 11px 22px;
+  margin-top: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
 }
 
 .btn-secondary:hover {
-    background-color: #c82333;
+  background: rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
 }
 
-.loading, .error {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #dc3545;
-    text-align: center;
+.loading,
+.error {
+  margin-top: 24px;
+  font-size: 1rem;
+  color: #fca5a5;
+  text-align: center;
 }

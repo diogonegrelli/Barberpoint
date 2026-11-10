@@ -76,9 +76,8 @@ function GerenciarClientes() {
                         <tr key={cliente.id}>
                             <td>{cliente.nome}</td>
                             <td>{cliente.email}</td>
-                            <td>
+                            <td className="actions" colSpan="2">
                                 <button onClick={() => handleEdit(cliente.id)}>Editar</button>
-                                {' | '}
                                 <button onClick={() => handleDelete(cliente.id)}>Deletar</button>
                             </td>
                         </tr>

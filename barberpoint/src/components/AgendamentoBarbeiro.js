@@ -13,7 +13,8 @@ function AgendamentosBarbeiro() {
     }, []);
 
     return (
-        <div>
+        <div className="agendamentos-container">
+            <h2>Agenda Geral de Atendimentos</h2>
             {agendamentos.map(agendamento => (
                 <div key={agendamento.id} className="card">
                     <h3>Barbeiro: {agendamento.barbeiro.nome} {agendamento.barbeiro.sobrenome}</h3>

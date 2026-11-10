@@ -69,7 +69,7 @@ function CadastroBarbeiro() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="cadastro-barbeiro-form" onSubmit={handleSubmit}>
             <h2>Cadastrar Barbeiro</h2>
             <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
             <input type="text" placeholder="Sobrenome" value={sobrenome} onChange={(e) => setSobrenome(e.target.value)} required />
